@@ -1,0 +1,15 @@
+[Unit]
+Description=Torrential Pi Start up Script
+Wants=network-online.target 
+After=network-online.target
+
+[Service]
+Type=simple
+User=TODOUSER
+Group=TODOGROUP
+ExecStart=/home/TODOUSER/TorrentialPi/Scripts/startup.sh
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
