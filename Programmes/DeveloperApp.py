@@ -283,7 +283,7 @@ class Sex:
 
                 with open('./Settings.json', 'w') as creamipi:
 
-                    json.dump(moan, creamipi)
+                    json.dump(moan, creamipi, indent=4)
 
                 print("Settings updated successfully.\n\n")
 
