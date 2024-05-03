@@ -252,9 +252,9 @@ pi ALL=(ALL) NOPASSWD: ALL
 Now run my `setup.py` at `./bin` and it will edit the Usernames, groups, and other similar variables in the system file where reading from `Settigns.json` is not feasible & will move it to their expected location.
 
 ```bash
+chmod +x /.bin/setup.py
 
 /usr/bin/python3 ./bin/setup.py
-
 ```
 
 Now we set up our script that needs to be running on boot. We will use Systemmd.
@@ -271,7 +271,17 @@ Now we make sure all scripts are executable by setting their permission.
 
 chmod +x ./Programmes/StatusLady.py
 
+chmod +x ./bin/ClearLog.app
+
+chmod +x ./bin/HelpmeClean.app
+
+chmod +x ./bin/HelpmeClean.app
+
+chmod +x ./bin/torrentialpi.service
+
 chmod +x /home/$USER/TorrentialPi/Scripts/startup.sh
+
+chmod +x /home/$USER/TorrentialPi/Scripts/CleanerScript.sh
 
 sudo systemctl daemon-reload
 
@@ -331,49 +341,16 @@ sudo systemctl status torrentialpi.service
 
 > TODo
 
-	Second is our `Guardsman` which keeps us updated on space shortage.
-	
-	We use cron to run this periodically. 
-	
-	Let's get the path to it. Run the following and copy the output of the second line (use the mouse to copy as `ctrl + C` or `cmd + C` is for stopping not coping)
-	
-	```bash
-	
-	cd ~~/TorrentialPi/Scripts
-	
-	echo "$(pwd)/Guadsman.sh"
-	
-	cd ~/TorrentialPi
-	
-	```
-	
-	Open the cron editor.
-	
-	```bash
-	
-	crontab -e
-	
-	```
-	
-	now add this:
-	
-	```bash
-	
-	add : 0 * * * * <what you copied/ path to your Guardsman.sh>
-	
-	```
-	
-> 	Don't put `<>`
 
-The third would be the Transmission Error checking file: `TransmissionErrorGirl.sh`
+The second one is Transmission Error checking file: `TransmissionErrorGirl.sh`
 
-Follow the same as above:
+We use cron to run this periodically. 
 
 Let's get the path to it. Run the following and copy the output of the second line (use the mouse to copy as `ctrl + C` or `cmd + C` is for stopping not coping)
 
 ```bash
 
-cd ~~/TorrentialPi/Scripts
+cd ~/TorrentialPi/Scripts
 
 echo "$(pwd)/TransmissionErrorGirl.sh"
 
@@ -399,7 +376,9 @@ add : 0 * * * * <what you copied/ path to your TransmissionErrorGirl.sh>
 
 > Don't put `<>`
 
-Fourth is the USB Transfer Automation Script. 
+
+
+Third is  USB Transfer Automation Script. 
 
 We use `udev` for this so open it on the editor (`nano`)
 
@@ -444,6 +423,16 @@ sudo udevadm control --reload-rules
 sudo udevadm trigger
 
 ```
+
+
+Next move there 2 files (their details givin in [After Setup](#After Setup)
+
+```bash
+mv ./bin/ClearLog.app ~/ClearLog.app
+
+mv ./bin/HelpmeClean.app ~/HelpmeClean.app
+```
+
 
 Finally, the last thing we need to do is to make sure Pi automatically log into Desktop without password.
 
