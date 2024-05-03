@@ -25,6 +25,8 @@ fi
 echo "Booting" > "../Status_and_Logs/TorrentialPi.statuss"
 
 # start LED program
+cd /home/$USER/TorrentialPi/Scripts
+
 /usr/bin/python3 ../Programmes/StatusLady.py &
 
 # Put No internet status untill Internet is available

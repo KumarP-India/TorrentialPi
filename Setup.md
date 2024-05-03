@@ -1,6 +1,6 @@
 - [x] Verify id ~ is where Github file be saved 
-- [ ] Change GitHub link
-- [ ] Change Github folder name if it is diffrent
+- [x] Change GitHub link
+- [x] Change Github folder name if it is diffrent
 - [x] DeveloperApp.py
 - [x] Settings.json
 - [x] DISK_PARTITION="/dev/root"  # TODO (Autostart?)
@@ -35,6 +35,8 @@ sudo raspi-config
 Navigate: `Interfacing Options` --> `SSH` --> `<Yes>` --> `<Finish>`
 
 > For newbies, you navigate with arrows, to jump to `<..>` use tabs, and to select use Enter/Return
+
+You know what, while you are here go through these settings 'cause why not? For newbies, Rraspbian Settings is this only. Yes, we have GUI in Application Drawer but that opens this only.
 
 Here is a thing, if you are gonna have a Pi server you probably already have a Router in your house/office. And since our Server is designed to be fully isolated and protected - you would want to keep it close to one of your routers/extenders. And if you are gonna go to this trouble why not use ethernet? 
 
@@ -137,9 +139,7 @@ sudo apt install exfat-fuse exfatprogs
 Finally, here we need to install one Python library.
 
 ```bash
-
-pip install transmissionrpc
-
+pip install transmissionrpc prompt_toolkit
 ```
 
 If your Pi doesn't let you use `pip` for installation because it is maintained by system then you can use `apt`
@@ -165,7 +165,7 @@ note: If you believe this is a mistake, please contact your Python installation 
 And this will be the fix:
 
 ```bash
-sudo apt install python3-transmissionrpc
+sudo apt install python3-transmissionrpc python3-prompt-toolkit
 ```
 
 > It might be a good time to reboot both you and your Pi. `sudo reboot` (works from SSH too)

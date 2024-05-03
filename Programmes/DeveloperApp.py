@@ -57,8 +57,8 @@ class Sex:
     def BoobGrab(self):
 
         # log files
-        scripts_log = '../Status_and_Logs/Scripts.log'
-        transfered_log = '../Status_and_Logs/transfered.log'
+        scripts_log = './Status_and_Logs/Scripts.log'
+        transfered_log = './Status_and_Logs/transfered.log'
 
         options = [
             ('boob', 'Universal log file (Scripts.log)'),
@@ -112,9 +112,9 @@ class Sex:
     def Blowjob(self):
 
         # log files
-        scripts_log = '../Status_and_Logs/Scripts.log'
-        transfered_log = '../Status_and_Logs/transfered.log'
-        cleaner_recommendation = '../Status_and_Logs/CleanerRecommendation.list'
+        scripts_log = './Status_and_Logs/Scripts.log'
+        transfered_log = './Status_and_Logs/transfered.log'
+        cleaner_recommendation = './Status_and_Logs/CleanerRecommendation.list'
 
 
         options = [
@@ -195,7 +195,7 @@ class Sex:
 
         cum = True
 
-        clit = '../Status_and_Logs/CleanerRecommendation.list'
+        clit = './Status_and_Logs/CleanerRecommendation.list'
 
         print("Here are previous recommendations:\n\n")
 
@@ -213,7 +213,7 @@ class Sex:
                     ]
                     ).run():
                 
-                    subprocess.run(['../Scripts/CleanerScript.sh'])
+                    subprocess.run(['./Scripts/CleanerScript.sh'])
 
                 else: self.Pornstar()
 
@@ -226,27 +226,29 @@ class Sex:
 
         try:
 
-            for i, j in json.load(open('../Settings.json()')).items:
+            with open('./Settings.json') as vagina:
+                
+                for i, j in json.load(vagina).items():
 
-                if input(f'Curently "{i}" is set to "{j}" . Do you want to change it? [Y/n]: ').lower() == 'n': continue
+                    if input(f'Curently "{i}" is set to "{j}" . Do you want to change it? [Y/n]: ').lower() == 'n': continue
 
-                orgasm = input(f'\nNew value for {i}: ')
+                    orgasm = input(f'\nNew value for {i}: ')
 
-                if not orgasm: 
-                    
-                    print("No value given. Skiping {i} with its current value - {j}")
+                    if not orgasm: 
+                        
+                        print("No value given. Skiping {i} with its current value - {j}")
 
-                    continue
+                        continue
 
-                try:
+                    try:
 
-                    orgasm = int(orgasm)
+                        orgasm = int(orgasm)
 
-                except ValueError:
+                    except ValueError:
 
-                    pass
+                        pass
 
-                pussy[i] = orgasm
+                    pussy[i] = orgasm
 
         
         except KeyboardInterrupt:
@@ -273,7 +275,7 @@ class Sex:
 
             else:
 
-                with open('../Settings.json', 'w') as creamipi:
+                with open('./Settings.json', 'w') as creamipi:
 
                     moan = json.load(creamipi)
 
@@ -506,7 +508,7 @@ Creates a frame for managing VNC Remote Desktop Access.
         cheek.pack(pady=10)
 
         try:
-            with open('../Status_and_Logs/CleanerRecommendation.list', 'r') as file:
+            with open('./Status_and_Logs/CleanerRecommendation.list', 'r') as file:
                 prostate = file.read()
         except FileNotFoundError:
             prostate = "Recommendation list not found."
@@ -564,8 +566,8 @@ Clears the selected log files.
         '''
 
         # log files
-        scripts_log = '../Status_and_Logs/Scripts.log'
-        transfered_log = '../Status_and_Logs/transfered.log'
+        scripts_log = './Status_and_Logs/Scripts.log'
+        transfered_log = './Status_and_Logs/transfered.log'
 
         if messagebox.askyesno("Confirm", f"Are you sure you want to clear these files?"):
 
@@ -596,9 +598,9 @@ Sends the selected log files.
         '''
 
         # log files
-        scripts_log = '../Status_and_Logs/Scripts.log'
-        transfered_log = '../Status_and_Logs/transfered.log'
-        cleaner_recommendation = '../Status_and_Logs/CleanerRecommendation.list'
+        scripts_log = './Status_and_Logs/Scripts.log'
+        transfered_log = './Status_and_Logs/transfered.log'
+        cleaner_recommendation = './Status_and_Logs/CleanerRecommendation.list'
 
         # Send the selected log files
         
@@ -652,7 +654,7 @@ Sends the selected log files.
         Refreshes the cleaning recommendation.
         '''
 
-        subprocess.run(['../Scripts/CleanerScript.sh'])
+        subprocess.run(['./Scripts/CleanerScript.sh'])
 
         self.ButtKiss_()
 
