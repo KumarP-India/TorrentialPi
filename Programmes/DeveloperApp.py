@@ -275,11 +275,13 @@ class Sex:
 
             else:
 
-                with open('./Settings.json', 'w') as creamipi:
+                with open('./Settings.json', 'r') as creamipi:
 
                     moan = json.load(creamipi)
 
                     moan.update(pussy)
+
+                with open('./Settings.json', 'w') as creamipi:
 
                     json.dump(moan, creamipi)
 
