@@ -102,7 +102,7 @@ Update the transmission settings based on the JSON file
             subprocess.run(['sudo', 'sed', '-i', f's/{search}/{replace}/g', file_path], check=True)
         print("Transmission Username to us updated successfully: 50%")
     except subprocess.CalledProcessError as e:
-        print(f"An error occurred for Transmission Username to us updating [50%]: {e}")
+        print(f"An error occurred for Transmission Username updating [other 50%]: {e}")
 
 def CleanerUpdate(settings_path: str):
     '''
@@ -113,7 +113,7 @@ Update the service file with the username and user group from the JSON file.
         settings = json.load(file)
 
     # Define the path to the file that needs to be modified
-    file_path = '../Scripts/CleanerScript.sh'
+    file_path = './Scripts/CleanerScript.sh'
 
     # Define the strings to search for and their replacements based on the JSON file
     search_replace = {
@@ -131,37 +131,6 @@ Update the service file with the username and user group from the JSON file.
         print(f"An error occurred for CleanerScript File updating: {e}")
 
 
-def GuardsmanUpdate(settings_path: str):
-    '''
-Update the service file with the username and user group from the JSON file.
-    '''
-    # Load the settings from the JSON file
-    with open(settings_path, 'r') as file:
-        settings = json.load(file)
-
-    # Define the path to the file that needs to be modified
-    file_path = '../Scripts/CleanerScript.sh'
-
-    # Define the strings to search for and their replacements based on the JSON file
-    search_replace = {
-        'TODOEMAAIL': settings['Email to recive'],
-        'TODODISKPART': settings['SD Card Location'],
-        'TODOCRITICAL': settings['Final/Max Check Disk Space (GB)'],
-        'TODOHIGH': settings['Third Check Disk Space (GB)'],
-        'TODOMEDM': settings['Second Check Disk Space (GB)'],
-        'TODOLOW': settings['First Check Disk Space (GB)']
-        }
-
-    # Use sed command with sudo to find and replace the strings in the file
-    try:
-        for search, replace in search_replace.items():
-            subprocess.run(['sudo', 'sed', '-i', f's/{search}/{replace}/g', file_path], check=True)
-        print("Guardsman File updated successfully.")
-    except subprocess.CalledProcessError as e:
-        print(f"An error occurred for Guardsman File updating: {e}")
-
-
-
 def TransferUpdate(settings_path: str):
     '''
 Update the service file with the username and user group from the JSON file.
@@ -171,7 +140,7 @@ Update the service file with the username and user group from the JSON file.
         settings = json.load(file)
 
     # Define the path to the file that needs to be modified
-    file_path = '../Scripts/TransferWoman.sh'
+    file_path = './Scripts/TransferWoman.sh'
 
     # Define the strings to search for and their replacements based on the JSON file
     search_replace = {
@@ -193,14 +162,12 @@ Update the service file with the username and user group from the JSON file.
 
 if __name__ == '__main__':
 
-    settings_path = '../Settings.json'
+    settings_path = './Settings.json'
 
     AutoStartupServiceFile(settings_path)
 
     TransmissionSettings(settings_path)
 
     CleanerUpdate(settings_path)
-
-    GuardsmanUpdate(settings_path)
 
     TransferUpdate(settings_path)

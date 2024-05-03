@@ -7,7 +7,7 @@
 @Updated: None
 
 @Project: Torrential Pi Version 1
-@File: startup.sh [Shell script]
+@File: startup [Shell script]
 Metadata
 
 

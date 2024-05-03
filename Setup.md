@@ -20,7 +20,7 @@ Password: raspberry
 
 Once logged in fire up the terminal as we would do everything from the terminal only. 
 
-> Don't worry about opening this page in Pi to copy-paste as I'm gonna first set up SSH so that you can have Pi Terminal on your PC which won't be slow when you open browser tabs.
+> Don't worry about opening this page in Pi to copy-paste as I'm gonna first set up SSH so that you can have Pi Terminal on your PC which won't be slowed when you open browser tabs.
 
 ## SSH
 
@@ -139,7 +139,7 @@ sudo apt install exfat-fuse exfatprogs
 Finally, here we need to install one Python library.
 
 ```bash
-pip install transmissionrpc prompt_toolkit
+pip install transmissionrpc
 ```
 
 If your Pi doesn't let you use `pip` for installation because it is maintained by system then you can use `apt`
@@ -165,7 +165,7 @@ note: If you believe this is a mistake, please contact your Python installation 
 And this will be the fix:
 
 ```bash
-sudo apt install python3-transmissionrpc python3-prompt-toolkit
+sudo apt install python3-transmissionrpc
 ```
 
 > It might be a good time to reboot both you and your Pi. `sudo reboot` (works from SSH too)
@@ -207,7 +207,7 @@ cd ~/TorrentialPi/
 
 ```
 
-Now we need to change a few settings. Please open `settings.json` and edit everything you want or have to. In case of confusion consult AI and/or the internet. I've planned to add this setting changing to GUI in `DeveloperApp`
+Now we need to change a few settings. Please open `settings.json` and edit everything you want or have to. In case of confusion consult AI and/or the internet. I've planned to add this setting changing and various other stuff to GUI in `DeveloperApp` in future.
 
 ```bash
 nano Settings.json
@@ -283,10 +283,6 @@ sudo ln -s /etc/transmission-daemon/settings.json /home/$USER/.config/transmissi
 
 sudo chown -R $USER:$USER /home/$USER/.config/transmission-daemon/
 
-chmod +x /home/$USER/TorrentialPi/Scripts/CleanerScript.sh
-
-chmod +x /home/$USER/TorrentialPi/Scripts/Guardsman.sh
-
 chmod +x /home/$USER/TorrentialPi/Scripts/TransferWoman.sh
 
 chmod +x /home/$USER/TorrentialPi/Scripts/TransmissionErrorGirl.sh
@@ -335,39 +331,39 @@ sudo systemctl status torrentialpi.service
 
 > TODo
 
-Second is our `Guardsman` which keeps us updated on space shortage.
-
-We use cron to run this periodically. 
-
-Let's get the path to it. Run the following and copy the output of the second line (use the mouse to copy as `ctrl + C` or `cmd + C` is for stopping not coping)
-
-```bash
-
-cd ~~/TorrentialPi/Scripts
-
-echo "$(pwd)/Guadsman.sh"
-
-cd ~/TorrentialPi
-
-```
-
-Open the cron editor.
-
-```bash
-
-crontab -e
-
-```
-
-now add this:
-
-```bash
-
-add : 0 * * * * <what you copied/ path to your Guardsman.sh>
-
-```
-
-> Don't put `<>`
+	Second is our `Guardsman` which keeps us updated on space shortage.
+	
+	We use cron to run this periodically. 
+	
+	Let's get the path to it. Run the following and copy the output of the second line (use the mouse to copy as `ctrl + C` or `cmd + C` is for stopping not coping)
+	
+	```bash
+	
+	cd ~~/TorrentialPi/Scripts
+	
+	echo "$(pwd)/Guadsman.sh"
+	
+	cd ~/TorrentialPi
+	
+	```
+	
+	Open the cron editor.
+	
+	```bash
+	
+	crontab -e
+	
+	```
+	
+	now add this:
+	
+	```bash
+	
+	add : 0 * * * * <what you copied/ path to your Guardsman.sh>
+	
+	```
+	
+> 	Don't put `<>`
 
 The third would be the Transmission Error checking file: `TransmissionErrorGirl.sh`
 
@@ -476,19 +472,36 @@ I also ship a test program that automatically tests all your scripts in the `Tor
 
 ## After Setup
 
-You can get remote access via SSH always but if you want Desktop too then you can have that via VNC. For this, you have to refer VNC guide online. Once set up to turn on or off VNC you can use `DeveloperApp`
+#### Remote Acess
 
-Log file is saving every step so very soon it would get very big to clear or if you want log files emailed to you - you can do it from `DeveloperApp`
+You can get remote access via SSH always but if you want Desktop too then you can have that via VNC. For this, you have to refer VNC guide online. Once set up to turn on or off VNC as you wish but make sure to turn off after use as it takes considerable resources.
 
-If you want to see recommendations for cleaning up space - again use `DevelopoerApp`
+#### Log files
 
-Few problems:
+Log file is saving every step so very soon it would get very big to clear or if you want log files emailed to you - you can do it from `ClearLog.app` in `~`
 
-1. Currently Settings can't be updated
-2. It needs a Desktop and can't be used in a terminal
-
-To use:
+> While SSH opens you in `~` but you are not in `~` then `cd ~`
 
 ```bash
-sudo /usr/bin/python3 ~/TorrentialPi/DeveloperApp.py
+./ClearLog.app
 ```
+
+
+
+If you want to view it, it is located at:
+
+```bash
+~/TorrentialPi/Status_and_Logs/Scripts/Scripts.log
+```
+
+
+
+
+#### Cleaning Recommendation
+
+It is advised to keep checking on storage and if you ever wants to know which are best to remove (least usefull) run:
+
+```bash
+~/HelpmeClean.app
+```
+
