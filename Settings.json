@@ -1,13 +1,5 @@
 {
-    "Email to send": "kumar.prabhas.india@gmail.com",
-    "Email to send password": "password",
-    "Email to recive": "kumar.prabhas.india@gmail.com",
     "SD Card Location": "/dev/mmcblk0p2",
-
-    "Final/Max Check Disk Space (GB)": 100,
-    "First Check Disk Space (GB)": 50,
-    "Second Check Disk Space (GB)": 60,
-    "Third Check Disk Space (GB)": 80,
 
     "GPIO Green": 23,
     "GPIO Red": 18,
@@ -36,7 +28,7 @@
     "alt-speed-up": 50,
     "blocklist-enabled": false,
     "blocklist-url": "http://www.example.com/blocklist",
-    "cache-size-mb": 4,
+    "cache-size-mb": 128,
     "download-dir": "/var/lib/transmission-daemon/downloads",
     "download-limit": 100,
     "download-limit-enabled": 0,
@@ -45,7 +37,7 @@
     "idle-seeding-limit": 30,
     "idle-seeding-limit-enabled": false,
     "incomplete-dir": "/var/lib/transmission-daemon/Downloads",
-    "incomplete-dir-enabled": false,
+    "incomplete-dir-enabled": true,
     "max-peers-global": 200,
     "peer-limit-global": 200,
     "peer-limit-per-torrent": 50,

@@ -13,16 +13,25 @@
 import subprocess
 import json
 
+
 def AutoStartupServiceFile(settings_path: str):
     '''
 Update the service file with the username and user group from the JSON file.
     '''
+    print("\n\nStarting to update Auto startup Service File.")
     # Load the settings from the JSON file
-    with open(settings_path, 'r') as file:
-        settings = json.load(file)
+    try:
+        with open(settings_path, 'r') as file:
+            settings = json.load(file)
+
+            print("Settings.json file loaded successfully.")
+
+    except:
+
+        print("Error: Settings.json file not found.")
 
     # Define the path to the file that needs to be modified
-    file_path = './torentialpi.service'
+    file_path = './bin/torrentialpi.service'
 
     # Define the strings to search for and their replacements based on the JSON file
     search_replace = {
@@ -38,22 +47,37 @@ Update the service file with the username and user group from the JSON file.
     except subprocess.CalledProcessError as e:
         print(f"An error occurred for Auto startup Service File updating: {e}")
 
+    print("\n\nExiting Auto startup Service File Update.")
+
 def TransmissionSettings(settings_path: str):
     '''
 Update the transmission settings based on the JSON file
     '''
 
+    print("\n\nStarting Transmission Settings Update.")
+
     TransmissionSettingsFile = '/etc/transmission-daemon/settings.json'
 
      # Load the settings from the JSON file
-    with open(settings_path, 'r') as file:
-        settings = json.load(file)
+    try:
+        with open(settings_path, 'r') as file:
+            settings = json.load(file)
+            print("Settings.json file loaded successfully.")
 
+    except:
+
+        print("Error: Settings.json file not found.")
 
     # Load the transmission settings from the file
-    with open(TransmissionSettingsFile, 'r') as file:
+    try:
+        with open(TransmissionSettingsFile, 'r') as file:
 
-        transmission_settings = json.load(file)
+            transmission_settings = json.load(file)
+            print("Transmission settings loaded successfully.")
+
+    except:
+
+        print("Error: Transmission settings file not found.")
 
     # Update the transmission settings based on the JSON file
     for key, value in settings.items():
@@ -66,11 +90,17 @@ Update the transmission settings based on the JSON file
     transmission_settings["trash-original-torrent-files"] = "true"
 
     # Save the updated transmission settings back to the file
-    with open(TransmissionSettingsFile, 'w') as file:
+    try:
+        with open(TransmissionSettingsFile, 'w') as file:
 
-        json.dump(transmission_settings, file, indent=4)
+            json.dump(transmission_settings, file, indent=4)
 
-    print("Transmission settings updated successfully.")
+            print("Transmission settings updated successfully.")
+            
+    except Exception as e:
+
+        print(f"Error: Transmission settings updating created: {e}.")
+
 
     # Define the path to the file that needs to be modified
     file_path = '/etc/init.d/transmission-daemon'
@@ -86,7 +116,7 @@ Update the transmission settings based on the JSON file
             subprocess.run(['sudo', 'sed', '-i', f's/{search}/{replace}/g', file_path], check=True)
         print("Transmission Username to us updated successfully: 50%")
     except subprocess.CalledProcessError as e:
-        print(f"An error occurred for Transmission Username to us updating [50%]: {e}")
+        print(f"Error happened in updating or opening /etc/init.d/transmission-daemon: {e}")
 
     # Define the path to the file that needs to be modified
     file_path = '/etc/systemd/system/multi-user.target.wants/transmission-daemon.service'
@@ -100,17 +130,28 @@ Update the transmission settings based on the JSON file
     try:
         for search, replace in search_replace.items():
             subprocess.run(['sudo', 'sed', '-i', f's/{search}/{replace}/g', file_path], check=True)
-        print("Transmission Username to us updated successfully: 50%")
+        print("Transmission Username to us updated successfully: 100%")
     except subprocess.CalledProcessError as e:
-        print(f"An error occurred for Transmission Username updating [other 50%]: {e}")
+        print(f"An error happened in updating or opening /etc/systemd/system/multi-user.target.wants/transmission-daemon.service: {e}")
+
+    print("\n\nExiting Transmission Settings Update.")
 
 def CleanerUpdate(settings_path: str):
     '''
 Update the service file with the username and user group from the JSON file.
     '''
+    print("\n\nStarting CleanerScript File Update.")
+
     # Load the settings from the JSON file
-    with open(settings_path, 'r') as file:
-        settings = json.load(file)
+    try:
+        with open(settings_path, 'r') as file:
+            settings = json.load(file)
+
+            print("Settings.json file loaded successfully.")
+
+    except:
+
+        print("Error: Settings.json file not found.")
 
     # Define the path to the file that needs to be modified
     file_path = './Scripts/CleanerScript.sh'
@@ -130,35 +171,54 @@ Update the service file with the username and user group from the JSON file.
     except subprocess.CalledProcessError as e:
         print(f"An error occurred for CleanerScript File updating: {e}")
 
+    print("\n\nExiting CleanerScript File Update.")
 
 def TransferUpdate(settings_path: str):
     '''
-Update the service file with the username and user group from the JSON file.
+    Update the service file with the username and user group from the JSON file.
     '''
+    print("\n\nStarting TransferWoman File Update.")
     # Load the settings from the JSON file
-    with open(settings_path, 'r') as file:
-        settings = json.load(file)
+    try:
+        with open(settings_path, 'r') as file:
+            settings = json.load(file)
+            print("Settings.json file loaded successfully.")
+    except FileNotFoundError:
+        print("Error: Settings.json file not found.")
+        return
 
     # Define the path to the file that needs to be modified
     file_path = './Scripts/TransferWoman.sh'
 
     # Define the strings to search for and their replacements based on the JSON file
     search_replace = {
-        'TODOUSERTRANS': settings['Transmission Username'],
-        'TODOPASSTRANS': settings['Transmission Password'],
-        'TODOMOUNT': settings['USB Storage Device Mount location'],
-        'TODODOWNFOLDERTRANS': settings['download-dir']
+        'TODOUSERTRANS': settings.get('Transmission Username', ''),
+        'TODOPASSTRANS': settings.get('Transmission Password', ''),
+        'TODOMOUNT': settings.get('USB Storage Device Mount location', ''),
+        'TODODOWNFOLDERTRANS': settings.get('download-dir', '')
     }
 
-    # Use sed command with sudo to find and replace the strings in the file
+    # Read the content of the file
     try:
-        for search, replace in search_replace.items():
-            subprocess.run(['sudo', 'sed', '-i', f's/{search}/{replace}/g', file_path], check=True)
+        with open(file_path, 'r') as f:
+            file_content = f.read()
+    except FileNotFoundError:
+        print(f"Error: File not found: {file_path}")
+        return
+
+    # Perform replacements directly in Python
+    for search, replace in search_replace.items():
+        file_content = file_content.replace(search, replace)
+
+    # Write the updated content back to the file
+    try:
+        with open(file_path, 'w') as f:
+            f.write(file_content)
         print("TransferWoman File updated successfully.")
-    except subprocess.CalledProcessError as e:
-        print(f"An error occurred for TransferWoman File updating: {e}")
+    except Exception as e:
+        print(f"An error occurred while updating TransferWoman File: {e}")
 
-
+    print("\n\nExiting TransferWoman File Update.")
 
 if __name__ == '__main__':
 

@@ -15,7 +15,7 @@ MOUNT_POINT="TODOMOUNT"
 DESKTOP_DIR="TODODOWNFOLDERTRANS"
 LOG_FILE="../Status_and_Logs/Scripts.log"
 USB_LOG="../Status_and_Logs/transfered.log"
-TRANS_REMOTE="transmission-remote localhost --auth TODOTRANSUSER:TODOTRANSPASS"
+TRANS_REMOTE="transmission-remote localhost --auth TODOUSERTRANS:TODOPASSTRANS"
 DEVICE="/dev/sda1"
 STATUS_FILE="../Status_and_Logs/TorrentialPi.status"
 

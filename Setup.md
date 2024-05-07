@@ -27,9 +27,7 @@ Once logged in fire up the terminal as we would do everything from the terminal 
 Run this command to get into Pi Settings GUI:
 
 ```bash
-
 sudo raspi-config
-
 ```
 
 Navigate: `Interfacing Options` --> `SSH` --> `<Yes>` --> `<Finish>`
@@ -49,17 +47,13 @@ Now, the router assigns one of the non-used IPs in the range it is advised to a
 Few more information, you would need an ID for your device that the router uses - `mac address`. Run this and look for something that looks like this (% means either number or alphabet): `%%:%%:%%:%%:%%:%%` (example {not mine}: `dc:a6:32:4a:fc:68`)
 
 ```bash
-
 ifconfig
-
 ```
 
 Once you have the IP (say: `192.168.1.100') of your Pi, fire up the terminal on Mac (for Windows use the internet on how to connect to SSH) and run:
 
 ```bash
-
 ssh pi@192.168.1.100
-
 ```
 
 As this would be your first time connecting it so your terminal will warn you about this:
@@ -85,9 +79,7 @@ You will be asked for a Password for user `pi`. And then you are in.
 We will remove some apps that are useless for us.
 
 ```bash
-
 dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n -r | head -n 20
-
 ```
 
 See (https://www.tomshardware.com/how-to/save-space-raspberry-pi-os) to understand the above command.
@@ -119,9 +111,7 @@ Next, we need all of the packages and files. [other than GitHub Files, that's n
 First, let's update the Pi.
 
 ```bash
-
 sudo apt update && sudo apt upgrade
-
 ```
 
 Next, let's install all the requirements.
@@ -172,7 +162,15 @@ sudo apt install python3-transmissionrpc
 
 
 
+Now let's clean up
 
+```bash
+
+sudo apt-get clean 
+
+sudo apt-get autoremove
+
+```
 
 
 
@@ -182,9 +180,7 @@ sudo apt install python3-transmissionrpc
 First of all, we need to stop the Transmission running in the background in order to change settings and upload our scripts 
 
 ```bash
-
 sudo systemctl stop transmission-daemon
-
 ```
 
 Let's get my files from Github:
@@ -202,9 +198,7 @@ Now we have a folder named `TorrentialPi` and this is where our files will live 
 Now we go into the folder
 
 ```bash
-
 cd ~/TorrentialPi/
-
 ```
 
 Now we need to change a few settings. Please open `settings.json` and edit everything you want or have to. In case of confusion consult AI and/or the internet. I've planned to add this setting changing and various other stuff to GUI in `DeveloperApp` in future.
@@ -218,9 +212,7 @@ nano Settings.json
 First, navigate inside the GitHub folder as everything is there and we will work from there. Also, make sure you're in the GitHub folder after every reboot or when no file found error happens - I won't keep reminding you.
 
 ```bash
-
 cd ~/TorrentialPi/
-
 ```
 
 Before we start setting up we need to make sure `sudo` doesn't require a `password` else our script won't be able to run.
@@ -228,41 +220,37 @@ Before we start setting up we need to make sure `sudo` doesn't require a `passwo
 To do so we open the `sudo` editor by:
 
 ```bash
-
 sudo visudo
-
 ```
 
 Find the line that reads `root ALL=(ALL) ALL` and add a similar line for your user, replacing `username` with your actual username. 
 
 ```bash
 
-<username> ALL=(ALL) NOPASSWD: /sbin/reboot
+<username> ALL=(ALL) NOPASSWD: ALL
 
 ```
 
 If you're using the default pi user, it will look like this:
 
 ```bash
-
 pi ALL=(ALL) NOPASSWD: ALL
-
 ```
 
 Now run my `setup.py` at `./bin` and it will edit the Usernames, groups, and other similar variables in the system file where reading from `Settigns.json` is not feasible & will move it to their expected location.
 
 ```bash
-chmod +x /.bin/setup.py
+
+chmod +x ./bin/setup.py
 
 /usr/bin/python3 ./bin/setup.py
+
 ```
 
 Now we set up our script that needs to be running on boot. We will use Systemmd.
 
 ```bash
-
 sudo mv ./bin/torrentialpi.service /etc/systemd/system/torrentialpi.service
-
 ```
 
 Now we make sure all scripts are executable by setting their permission.
