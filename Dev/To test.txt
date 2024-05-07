@@ -1,8 +1,78 @@
 
 0. setup.py
+
+> ./bin/torrentialpi.service
+
+    a. TODOUSER - Username
+    b. TODOGROUP - Group
+
+> /etc/transmission-daemon/settings.json
+
+    Transmission settings
+
+> `sudo systemctl cat transmission-daemon.service`
+
+    Check Username
+
+> ./Scripts/CleanerScript.sh
+
+    a. TODOPORT - 9091
+    b. TODOUSERTRANS - Username
+    c. TODOPASSTRANS - Pass
+
+> ./Scripts/TransferWoman.sh
+
+    a. TODOMOUNT - /mnt/usb
+    b. TODOUSERTRANS - Username
+    c. TODOPASSTRANS - Pass
+    d. TODODOWNFOLDERTRANS - Desktop
+
+
 1. Autostart + Startup
+
+    Test Transmission Web
+
+    Test LED
+
+
 2. Transfer Woman
+
+    Formetted on empty Desktop
+
+    Size inteligent coping
+
+
 3. LED
-4. Clear Log + Help me clean
-5. CleanerScript
+
+> Boot: Off - Booting/No internet - Booting
+
+> USB: Transfer - Done
+
+> Manually: USB-ERROR, <>
+
+
+4. Clear Log
+
+    Option
+    Confirm
+    Clear
+
+
+5. CleanerScript  + Help me clean
+
+> sh
+
+    ./TorrentialPi/Status_and_Logs/CleanerRecommendation.list
+
+> App
+
+    ./TorrentialPi/Status_and_Logs/CleanerRecommendation.list content displayed
+    Option to regnerate
+    run sh
+
+
+
+
 6. Transmission Error
+
+> Error: Reboot once only
