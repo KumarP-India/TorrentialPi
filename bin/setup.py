@@ -102,39 +102,23 @@ Update the transmission settings based on the JSON file
         print(f"Error: Transmission settings updating created: {e}.")
 
 
-    # Define the path to the file that needs to be modified
-    file_path = '/etc/init.d/transmission-daemon'
-
-    # Define the strings to search for and their replacements based on the JSON file
-    search_replace = {
-        'USER': settings['Username']
-    }
-
-    # Use sed command with sudo to find and replace the strings in the file
-    try:
-        for search, replace in search_replace.items():
-            subprocess.run(['sudo', 'sed', '-i', f's/{search}/{replace}/g', file_path], check=True)
-        print("Transmission Username to us updated successfully: 50%")
-    except subprocess.CalledProcessError as e:
-        print(f"Error happened in updating or opening /etc/init.d/transmission-daemon: {e}")
-
-    # Define the path to the file that needs to be modified
-    file_path = '/etc/systemd/system/multi-user.target.wants/transmission-daemon.service'
-
-    # Define the strings to search for and their replacements based on the JSON file
-    search_replace = {
-        'USER': settings['Username']
-    }
-
-    # Use sed command with sudo to find and replace the strings in the file
-    try:
-        for search, replace in search_replace.items():
-            subprocess.run(['sudo', 'sed', '-i', f's/{search}/{replace}/g', file_path], check=True)
-        print("Transmission Username to us updated successfully: 100%")
-    except subprocess.CalledProcessError as e:
-        print(f"An error happened in updating or opening /etc/systemd/system/multi-user.target.wants/transmission-daemon.service: {e}")
-
-    print("\n\nExiting Transmission Settings Update.")
+    override_dir = '/etc/systemd/system/transmission-daemon.service.d/'
+    override_file = 'override.conf'
+    
+    # Ensure the override directory exists
+    subprocess.run(['sudo', 'mkdir', '-p', override_dir], check=True)
+    
+    # Define the content to be written to the override file
+    content = f"[Service]\nUser={settings['Username']}\n"
+    
+    # Write the content to the override file
+    with open(f"{override_dir}{override_file}", 'w') as file:
+        file.write(content)
+    
+    # Reload systemd to apply changes
+    subprocess.run(['sudo', 'systemctl', 'daemon-reload'], check=True)
+    subprocess.run(['sudo', 'systemctl', 'restart', 'transmission-daemon'], check=True)
+    print("Transmission daemon user updated successfully.")
 
 def CleanerUpdate(settings_path: str):
     '''
