@@ -10,7 +10,7 @@
 
     Transmission settings
 
-> `sudo systemctl cat transmission-daemon.service`
+> `sudo systemctl cat transmission-daemon.service` [if testing while setting up, you have to wait till full setup + reboot]
 
     Check Username
 

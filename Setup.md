@@ -1,11 +1,3 @@
-- [x] Verify id ~ is where Github file be saved 
-- [x] Change GitHub link
-- [x] Change Github folder name if it is diffrent
-- [x] DeveloperApp.py
-- [x] Settings.json
-- [x] DISK_PARTITION="/dev/root"  # TODO (Autostart?)
-- [ ] TODO: 1
-
 I assume you have flashed your SD card with the latest Raspbian OS. Now, insert your SD card into your Pi, and connect your monitor, keyboard & mouse to your Pi.
 
 You should by default already be logged in. But if not use default credentials. At the time of writing it was:
@@ -187,7 +179,7 @@ Let's get my files from Github:
 
 ```bash
 
-cd ~ 
+cd ~
 
 git clone https://github.com/KumarP-India/TorrentialPi.git
 
@@ -243,7 +235,7 @@ Now run my `setup.py` at `./bin` and it will edit the Usernames, groups, and oth
 
 chmod +x ./bin/setup.py
 
-/usr/bin/python3 ./bin/setup.py
+sudo /usr/bin/python3 ./bin/setup.py
 
 ```
 
@@ -265,7 +257,7 @@ chmod +x ./bin/HelpmeClean.app
 
 chmod +x ./bin/HelpmeClean.app
 
-chmod +x ./bin/torrentialpi.service
+chmod +x /etc/systemd/system/torrentialpi.service
 
 chmod +x /home/$USER/TorrentialPi/Scripts/startup.sh
 
@@ -277,7 +269,7 @@ sudo chown -R $USER:$USER /etc/transmission-daemon
 
 sudo mkdir -p /home/$USER/.config/transmission-daemon/
 
-sudo ln -s /etc/transmission-daemon/settings.json /home/$USER/.config/transmission-daemon/
+sudo ln -sf /etc/transmission-daemon/settings.json /home/$USER/.config/transmission-daemon/
 
 sudo chown -R $USER:$USER /home/$USER/.config/transmission-daemon/
 
@@ -296,9 +288,7 @@ First, we tell systemmd about our `.servcie` file that executes our custom start
 To do this we first make sure the NetworkManager is set to be active before our script is run because our script waits for the internet before exiting it.
 
 ```bash
-
 sudo systemctl enable NetworkManager-wait-online.service
-
 ```
 
 Now reload it and enable our script
@@ -314,21 +304,26 @@ sudo systemctl enable torrentialpi.service
 Now, start the `torrentialpi.service`
 
 ```bash
-
 sudo systemctl start torrentialpi.service
-
 ```
 
 Verify
 
 ```bash
-
 sudo systemctl status torrentialpi.service
-
 ```
 
-> TODo
+The first 2 lines of output should be this:
 
+```bash
+
+○ torrentialpi.service - Torrential Pi Start up Script
+
+     Loaded: loaded (/etc/systemd/system/torrentialpi.service; enabled; preset: enabled)
+     
+```
+
+> Make sure it has both `Loaded: loaded` and  `enabled` in it.
 
 The second one is Transmission Error checking file: `TransmissionErrorGirl.sh`
 
@@ -349,16 +344,14 @@ cd ~/TorrentialPi
 Open the cron editor.
 
 ```bash
-
 crontab -e
-
 ```
 
 now add this:
 
 ```bash
 
-add : 0 * * * * <what you copied/ path to your TransmissionErrorGirl.sh>
+0 * * * * <what you copied/ path to your TransmissionErrorGirl.sh>
 
 ```
 
@@ -376,7 +369,7 @@ Run the following and copy the output of the second line (use the mouse to copy 
 
 ```bash
 
-cd ~~/TorrentialPi/Scripts
+cd ~/TorrentialPi/Scripts
 
 echo "$(pwd)/TransferWoman.sh"
 
@@ -387,9 +380,7 @@ cd ~/TorrentialPi
 Open it:
 
 ```bash
-
 sudo nano /etc/udev/rules.d/100-usb-autotransfer.rules
-
 ```
 
 Add this:
@@ -416,9 +407,11 @@ sudo udevadm trigger
 Next move there 2 files (their details givin in [After Setup](#After Setup)
 
 ```bash
+
 mv ./bin/ClearLog.app ~/ClearLog.app
 
 mv ./bin/HelpmeClean.app ~/HelpmeClean.app
+
 ```
 
 
